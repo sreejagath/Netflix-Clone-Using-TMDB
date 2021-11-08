@@ -214,13 +214,45 @@ class _SeriesPageState extends State<SeriesPage> {
                               ),
                           SizedBox(
                             width: 10,
-                          )
+                          ),
                         ],
                       );
                     })),
             SizedBox(
               height: 10,
-            )
+            ),
+            Container(
+
+                //margin: EdgeInsets.symmetric(vertical: 20.0),
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: moviePosters.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          Container(
+                              height: 180,
+                              width: 150,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Image.network(
+                                  moviePosters[index],
+                                  height: 150.0,
+                                  width: 100.0,
+                                ),
+                              )
+                              //SizedBox(width: 20,)
+                              ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      );
+                    })),
+            
           ],
         ),
       ),
