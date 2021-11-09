@@ -26,18 +26,19 @@ class _SeriesPageState extends State<SeriesPage> {
   late Future<Album> futureAlbum;
   late Future<Trending> futureTrending;
   List movieData = [];
+  List actionMovieData = [];
+  List comedyMovieData = [];
   //late Future<Trending>
   @override
   void initState() {
     super.initState();
-    futureAlbum = fetchAlbum();
-    futureTrending = fetchTrending();
     fetchMovie();
   }
 
   fetchMovie() async {
     movieData = await fetchTrendingMovie();
-    print('Trending movie data : $movieData');
+    actionMovieData = await fetchActionMovie();
+    comedyMovieData = await fetchComedyMovie();
   }
 
   @override
@@ -72,20 +73,109 @@ class _SeriesPageState extends State<SeriesPage> {
                     itemBuilder: (BuildContext context, int index) {
                       return Row(
                         children: [
-                          Container(
+                          SizedBox(
                               height: 180,
                               width: 150,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(10.0),
                                 child: Image.network(
                                   imageUrl + movieData[index]['backdrop_path'],
-                                  height: 150.0,
-                                  width: 100.0,
+                                  fit: BoxFit.cover,
                                 ),
-                              )
-                              ),
+                              )),
                           const SizedBox(
-                            width: 10,
+                            width: 20,
+                          )
+                        ],
+                      );
+                    })),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text(
+                  'Action',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+
+                //margin: EdgeInsets.symmetric(vertical: 20.0),
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: actionMovieData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          SizedBox(
+                              height: 180,
+                              width: 150,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  imageUrl +
+                                      actionMovieData[index]['backdrop_path'],
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          const SizedBox(
+                            width: 20,
+                          )
+                        ],
+                      );
+                    })),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text(
+                  'Comedy',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+
+                //margin: EdgeInsets.symmetric(vertical: 20.0),
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: comedyMovieData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      print(comedyMovieData[index]['title']);
+                      return Row(
+                        children: [
+                          SizedBox(
+                              height: 180,
+                              width: 150,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  imageUrl +
+                                      comedyMovieData[index]['backdrop_path'],
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          const SizedBox(
+                            width: 20,
                           )
                         ],
                       );
