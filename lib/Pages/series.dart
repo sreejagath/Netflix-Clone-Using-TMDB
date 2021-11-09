@@ -1,5 +1,7 @@
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
+import '../Data Fetch/default_datas.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 
@@ -22,11 +24,14 @@ List moviePosters = [
 
 class _SeriesPageState extends State<SeriesPage> {
   late Future<Album> futureAlbum;
+  late Future<Trending> futureTrending;
   @override
   void initState() {
     super.initState();
     futureAlbum = fetchAlbum();
+    futureTrending = fetchTrending();
     print(futureAlbum);
+    //fetchTrending();
   }
 
   @override
@@ -36,6 +41,92 @@ class _SeriesPageState extends State<SeriesPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Popular On Netflix',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FutureBuilder<Trending>(
+              future: futureTrending,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  print('HELLO : ${snapshot.data?.imagePath}');
+                  return Row(
+                    children: [
+                      Container(
+                          height: 180,
+                          width: 150,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            // child: Image.network(
+                            //   moviePosters[index],
+                            //   height: 150.0,
+                            //   width: 100.0,
+                            // ),
+                            child: Image.network(
+                              imageUrl + snapshot.data!.imagePath,
+                              height: 150.0,
+                              width: 100.0,
+                            ),
+                          )
+                          //SizedBox(width: 20,)
+                          ),
+                      SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  );
+                  //return Text(snapshot.data!.title);
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+            Container(
+
+                //margin: EdgeInsets.symmetric(vertical: 20.0),
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: moviePosters.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          Container(
+                              height: 180,
+                              width: 150,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Image.network(
+                                  "https://image.tmdb.org/t/p/w500/eeijXm3553xvuFbkPFkDG6CLCbQ.jpg",
+                                  height: 150.0,
+                                  width: 100.0,
+                                ),
+                              )
+                              //SizedBox(width: 20,)
+                              ),
+                          SizedBox(
+                            width: 10,
+                          )
+                        ],
+                      );
+                    })),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -82,7 +173,8 @@ class _SeriesPageState extends State<SeriesPage> {
                     })),
             SizedBox(
               height: 10,
-            ),            Row(
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -128,53 +220,8 @@ class _SeriesPageState extends State<SeriesPage> {
                     })),
             SizedBox(
               height: 10,
-            ),            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Popular On Netflix',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                )
-              ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-
-                //margin: EdgeInsets.symmetric(vertical: 20.0),
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: moviePosters.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        children: [
-                          Container(
-                              height: 180,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.network(
-                                  moviePosters[index],
-                                  height: 150.0,
-                                  width: 100.0,
-                                ),
-                              )
-                              //SizedBox(width: 20,)
-                              ),
-                          SizedBox(
-                            width: 10,
-                          )
-                        ],
-                      );
-                    })),
-            SizedBox(
-              height: 10,
-            ),            Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -252,7 +299,6 @@ class _SeriesPageState extends State<SeriesPage> {
                         ],
                       );
                     })),
-            
           ],
         ),
       ),

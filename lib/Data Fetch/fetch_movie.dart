@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import './default_datas.dart';
 // Future<http.Response> fetchAlbum() {
 //   return http.get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 // }
@@ -23,6 +24,7 @@ class Album {
     );
   }
 }
+
 Future<Album> fetchAlbum() async {
   final response = await http
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
@@ -31,6 +33,47 @@ Future<Album> fetchAlbum() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+class Trending {
+  final String title;
+  final int id;
+  final String imagePath;
+
+  Trending({
+    required this.imagePath,
+    required this.id,
+    required this.title,
+  });
+
+  factory Trending.fromJson(Map<String, dynamic> json) {
+    return Trending(
+      title: json['title'],
+      imagePath: json['backdrop_path'],
+      id: json['id'],
+    );
+  }
+}
+
+Future<Trending> fetchTrending() async {
+  final response = await http.get(Uri.parse(
+      defaultUrl + 'trending/all/week?api_key=' + api + '&language=en-US'));
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    //print(response.body);
+    //get results from response.body
+    var jsonData = json.decode(response.body);
+    //print(jsonData);
+    // print(jsonData['results'][0]['title']);
+    // print(jsonData['results'][0]['backdrop_path']);
+    return Trending.fromJson(jsonData['results'][0]);
+    //return Trending.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
