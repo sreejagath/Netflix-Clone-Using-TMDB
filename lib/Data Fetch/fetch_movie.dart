@@ -64,19 +64,37 @@ Future<Trending> fetchTrending() async {
   final response = await http.get(Uri.parse(
       defaultUrl + 'trending/all/week?api_key=' + api + '&language=en-US'));
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    //print(response.body);
-    //get results from response.body
     var jsonData = json.decode(response.body);
-    //print(jsonData);
-    // print(jsonData['results'][0]['title']);
-    // print(jsonData['results'][0]['backdrop_path']);
+    // print(jsonData['results']);
+
     return Trending.fromJson(jsonData['results'][0]);
-    //return Trending.fromJson(jsonDecode(response.body));
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+// class TrendingMovies {
+//   final List trendingMovies;
+
+//   TrendingMovies({
+//     required this.trendingMovies,
+//   });
+
+//   factory TrendingMovies.fromJson(List json) {
+//     return TrendingMovies(
+//       trendingMovies: json,
+//     );
+//   }
+// }
+
+Future fetchTrendingMovie() async {
+  final response = await http.get(Uri.parse(
+      defaultUrl + 'trending/all/week?api_key=' + api + '&language=en-US'));
+  if (response.statusCode == 200) {
+    var jsonData = json.decode(response.body);
+
+    return jsonData['results'];
+  } else {
     throw Exception('Failed to load album');
   }
 }
