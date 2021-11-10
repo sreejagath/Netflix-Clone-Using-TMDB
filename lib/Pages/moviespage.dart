@@ -1,25 +1,7 @@
-// import 'package:flutter/material.dart';
-
-// class MoviesPage extends StatefulWidget {
-//   const MoviesPage({Key? key}) : super(key: key);
-
-//   @override
-//   _MoviesPageState createState() => _MoviesPageState();
-// }
-
-// class _MoviesPageState extends State<MoviesPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
 import 'dart:ui';
 import 'dart:math';
-import 'package:http/http.dart' as http;
 import 'package:netflix_clone/Pages/movie_detail.dart';
-import '../Data Fetch/default_datas.dart';
-import 'dart:convert';
+import 'package:netflix_clone/Data Fetch/default_datas.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 
@@ -35,8 +17,7 @@ class _MoviesPageState extends State<MoviesPage> {
   Future? fetchComedyMovies;
   Future? fetchTrendingMovies;
   Future? fetchActionMovies;
-  final random = new Random();
-  //late Future<Trending>
+  final random = Random();
   @override
   void initState() {
     super.initState();
@@ -65,7 +46,6 @@ class _MoviesPageState extends State<MoviesPage> {
                       children: [
                         Stack(children: [
                           Container(
-                            //margin: EdgeInsets.symmetric(vertical: 20.0),
                             height: 200,
                             width: double.infinity,
                             child: ListView.builder(
@@ -77,7 +57,6 @@ class _MoviesPageState extends State<MoviesPage> {
                                       MediaQuery.of(context).size.height * 0.3,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    //borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
                                       image: NetworkImage(
                                         imageUrl +
@@ -92,7 +71,6 @@ class _MoviesPageState extends State<MoviesPage> {
                             ),
                           ),
                           Container(
-                            //title and play button
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.3,
                             decoration: BoxDecoration(
@@ -111,34 +89,14 @@ class _MoviesPageState extends State<MoviesPage> {
                               left: MediaQuery.of(context).size.width * 0.2,
                               child: Column(
                                 children: [
-                                  // SizedBox(
-                                  //   height: MediaQuery.of(context).size.height * 0.1,
-                                  // ),
-                                  // Text(
-                                  //   movieData.isEmpty
-                                  //       ? 'Trending Movies'
-                                  //       : movieData[0]['title'],
-                                  //   style: TextStyle(
-                                  //       fontSize: 25,
-                                  //       fontWeight: FontWeight.bold,
-                                  //       color: Colors.white),
-                                  // ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      // Icon(
-                                      //   Icons.play_circle_outline,
-                                      //   color: Colors.white,
-                                      //   size: 30,
-                                      // ),
-                                      // SizedBox(
-                                      //   width: 10,
-                                      // ),
                                       Column(
-                                        children: [
+                                        children: const [
                                           Icon(
                                             Icons.add,
                                             color: Colors.white,
@@ -146,7 +104,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                           Text('My List')
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 20,
                                       ),
                                       ElevatedButton(
@@ -160,7 +118,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                           }));
                                         },
                                         child: Row(
-                                          children: [
+                                          children: const [
                                             Icon(
                                               Icons.play_arrow,
                                               color: Colors.black,
@@ -169,7 +127,6 @@ class _MoviesPageState extends State<MoviesPage> {
                                               'Play',
                                               style: TextStyle(
                                                 color: Colors.black,
-                                                //fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -179,11 +136,11 @@ class _MoviesPageState extends State<MoviesPage> {
                                           primary: Colors.white,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 20,
                                       ),
                                       Column(
-                                        children: [
+                                        children: const [
                                           Icon(
                                             Icons.info,
                                             color: Colors.white,
@@ -201,13 +158,11 @@ class _MoviesPageState extends State<MoviesPage> {
                   } else if (snapshot.hasError) {
                     return Text('${snapshot.error}');
                   }
-
-                  // By default, show a loading spinner.
                   return const CircularProgressIndicator();
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -229,7 +184,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 if (snapshot.hasData) {
                   List movie = snapshot.data! as List;
                   return Container(
-                      //margin: EdgeInsets.symmetric(vertical: 20.0),
                       height: 200,
                       width: double.infinity,
                       child: ListView.builder(
@@ -271,8 +225,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-
-                // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               },
             ),
@@ -298,7 +250,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 if (snapshot.hasData) {
                   List movie = snapshot.data! as List;
                   return Container(
-                      //margin: EdgeInsets.symmetric(vertical: 20.0),
                       height: 200,
                       width: double.infinity,
                       child: ListView.builder(
@@ -340,8 +291,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-
-                // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               },
             ),
@@ -367,7 +316,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 if (snapshot.hasData) {
                   List movie = snapshot.data! as List;
                   return Container(
-                      //margin: EdgeInsets.symmetric(vertical: 20.0),
                       height: 200,
                       width: double.infinity,
                       child: ListView.builder(
@@ -409,8 +357,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-
-                // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               },
             ),
@@ -436,7 +382,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 if (snapshot.hasData) {
                   List movie = snapshot.data! as List;
                   return Container(
-                      //margin: EdgeInsets.symmetric(vertical: 20.0),
                       height: 200,
                       width: double.infinity,
                       child: ListView.builder(
@@ -478,8 +423,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-
-                // By default, show a loading spinner.
                 return const CircularProgressIndicator();
               },
             ),

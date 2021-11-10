@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Pages/categories.dart';
+import 'package:netflix_clone/Pages/coming_soon.dart';
 import 'package:netflix_clone/Pages/home.dart';
 import 'package:netflix_clone/Pages/moviespage.dart';
 import 'package:netflix_clone/Pages/series.dart';
@@ -16,9 +17,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text(
-      'Index 2: School',
-    ),
+    ComingSoon(),
     Text(
       'Index 2: School',
     ),
@@ -53,31 +52,6 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.person))
           ],
-          // bottom: TabBar(
-          //   isScrollable: true,
-          //   indicatorColor: Colors.transparent,
-          //   tabs: [
-          //     const Tab(
-          //       child: Text(
-          //         'Series',
-          //       ),
-          //     ),
-          //     const Tab(
-          //       text: 'Movies',
-          //     ),
-          //     Row(
-          //       children: [
-          //         const Tab(
-          //           text: 'Categories',
-          //         ),
-          //         IconButton(
-          //           icon: const Icon(Icons.arrow_drop_down),
-          //           onPressed: () {},
-          //         )
-          //       ],
-          //     ),
-          //   ],
-          // ),
         ),
         // body: const TabBarView(
         //     children: [SeriesPage(), MoviesPage(), CategoriesPage()]),
