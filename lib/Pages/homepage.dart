@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Pages/categories.dart';
 import 'package:netflix_clone/Pages/coming_soon.dart';
+import 'package:netflix_clone/Pages/downloads.dart';
 import 'package:netflix_clone/Pages/home.dart';
 import 'package:netflix_clone/Pages/moviespage.dart';
 import 'package:netflix_clone/Pages/series.dart';
@@ -21,9 +22,7 @@ class _HomePageState extends State<HomePage> {
     Text(
       'Index 2: School',
     ),
-    Text(
-      'Index 2: School',
-    ),
+    Downloads()
   ];
   void _onItemTapped(int index) {
     setState(() {
