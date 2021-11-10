@@ -122,7 +122,6 @@ Future getTheMovie(int id) async {
       defaultUrl + 'movie/' + id.toString()+ '?api_key=' + api + '&language=en-US'));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
-    print(jsonData);
     return jsonData;
   } else {
     throw Exception('Failed to load album');
