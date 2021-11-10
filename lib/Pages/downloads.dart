@@ -68,19 +68,6 @@ class _DownloadsState extends State<Downloads> {
               ),
             ),
           ),
-          // Transform.rotate(
-          //   angle: -0.5,
-          //   child: Container(
-          //     height: 200,
-          //     width: double.infinity,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(10),
-          //         image: DecorationImage(
-          //           image: NetworkImage(
-          //               'https://m.media-amazon.com/images/M/MV5BMjI0NmFkYzEtNzU2YS00NTg5LWIwYmMtNmQ1MTU0OGJjOTMxXkEyXkFqcGdeQXVyMjMxOTE0ODA@._V1_.jpg'),
-          //         )),
-          //   ),
-          // ),
           Positioned(
             top: 0,
             left: 200,
@@ -92,7 +79,7 @@ class _DownloadsState extends State<Downloads> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
-                        'https://m.media-amazon.com/images/M/MV5BMjI0NmFkYzEtNzU2YS00NTg5LWIwYmMtNmQ1MTU0OGJjOTMxXkEyXkFqcGdeQXVyMjMxOTE0ODA@._V1_.jpg'),
+                        'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg'),
                     //fit: BoxFit.cover,
                   ),
                 ),
@@ -106,11 +93,14 @@ class _DownloadsState extends State<Downloads> {
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: NetworkImage(
-                      'https://m.media-amazon.com/images/M/MV5BMjI0NmFkYzEtNzU2YS00NTg5LWIwYmMtNmQ1MTU0OGJjOTMxXkEyXkFqcGdeQXVyMjMxOTE0ODA@._V1_.jpg'),
+                      'https://m.media-amazon.com/images/M/MV5BMzJhNjMyOGMtYjhiYy00ZTAwLThmZWUtZmE5NzI3OTk4Y2M4XkEyXkFqcGdeQXVyMzQ5Njc3NzU@._V1_.jpg'),
                 )),
           ),
           
         ],
+      ),
+      SizedBox(
+        height: 10,
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),

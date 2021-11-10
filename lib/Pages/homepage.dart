@@ -4,6 +4,7 @@ import 'package:netflix_clone/Pages/coming_soon.dart';
 import 'package:netflix_clone/Pages/downloads.dart';
 import 'package:netflix_clone/Pages/home.dart';
 import 'package:netflix_clone/Pages/moviespage.dart';
+import 'package:netflix_clone/Pages/quick_laugh.dart';
 import 'package:netflix_clone/Pages/series.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 
@@ -19,9 +20,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     ComingSoon(),
-    Text(
-      'Index 2: School',
-    ),
+    QuickLaughs(),
     Downloads()
   ];
   void _onItemTapped(int index) {
