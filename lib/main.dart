@@ -10,6 +10,7 @@ void main() {
               TextTheme(bodyText2: TextStyle(
                 color: Colors.white
               ))),
+      
     ),
   );
 }

@@ -105,3 +105,14 @@ Future fetchComedyMovie() async {
     throw Exception('Failed to load album');
   }
 }
+
+Future fetchCrimeMovie() async {
+  final response = await http.get(Uri.parse(
+      defaultUrl + 'discover/movie?api_key=' + api + '&with_genres=80'));
+  if (response.statusCode == 200) {
+    var jsonData = json.decode(response.body);
+    return jsonData['results'];
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
