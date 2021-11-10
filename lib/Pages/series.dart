@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:http/http.dart' as http;
+import 'package:netflix_clone/Pages/movie_detail.dart';
 import '../Data Fetch/default_datas.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -25,6 +26,10 @@ List moviePosters = [
 class _SeriesPageState extends State<SeriesPage> {
   late Future<Album> futureAlbum;
   late Future<Trending> futureTrending;
+  Future? fetchCrimeMovies;
+  Future? fetchComedyMovies;
+  Future? fetchTrendingMovies;
+  Future? fetchActionMovies;
   List movieData = [];
   List actionMovieData = [];
   List comedyMovieData = [];
@@ -39,13 +44,17 @@ class _SeriesPageState extends State<SeriesPage> {
     setState(() {
       movieData = movieData;
     });
+    fetchCrimeMovies = fetchCrimeMovie();
+    fetchComedyMovies = fetchComedyMovie();
+    fetchTrendingMovies = fetchTrendingMovie();
+    fetchActionMovies = fetchActionMovie();
   }
 
   fetchMovie() async {
     movieData = await fetchTrendingMovie();
     actionMovieData = await fetchActionMovie();
     comedyMovieData = await fetchComedyMovie();
-    crimeMovieData = await fetchCrimeMovie();
+    //crimeMovieData = await fetchCrimeMovie();
   }
 
   @override
@@ -58,9 +67,18 @@ class _SeriesPageState extends State<SeriesPage> {
             Container(
               height: MediaQuery.of(context).size.height * 0.3,
               child: Stack(children: [
-                ListView.builder(
+                FutureBuilder(
+              future: fetchTrendingMovies,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List movie = snapshot.data! as List;
+                  return Container(
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: movieData.length,
+                  itemCount: movie.length,
                   itemBuilder: (context, index) {
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.3,
@@ -69,7 +87,7 @@ class _SeriesPageState extends State<SeriesPage> {
                         //borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           image: NetworkImage(
-                            imageUrl + movieData[0]['backdrop_path'],
+                            imageUrl + movie[0]['backdrop_path'],
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -89,6 +107,16 @@ class _SeriesPageState extends State<SeriesPage> {
                   //   ),
                   // ),
                 ),
+                          );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+                
                 Container(
                   //title and play button
                   width: MediaQuery.of(context).size.width,
@@ -181,13 +209,6 @@ class _SeriesPageState extends State<SeriesPage> {
                                 Text('Info')
                               ],
                             ),
-                            // Text(
-                            //   'Play',
-                            //   style: TextStyle(
-                            //       fontSize: 20,
-                            //       fontWeight: FontWeight.bold,
-                            //       color: Colors.white),
-                            // ),
                           ],
                         ),
                       ],
@@ -210,34 +231,59 @@ class _SeriesPageState extends State<SeriesPage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-
-                //margin: EdgeInsets.symmetric(vertical: 20.0),
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movieData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        children: [
-                          SizedBox(
-                              height: 180,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  imageUrl + movieData[index]['backdrop_path'],
-                                  fit: BoxFit.cover,
+            FutureBuilder(
+              future: fetchTrendingMovies,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List movie = snapshot.data! as List;
+                  return Container(
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: movie.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MovieDetail(
+                                            id: movieData[index]['id']),
+                                      ),
+                                    );
+                                  },
+                                  child: SizedBox(
+                                      height: 180,
+                                      width: 150,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: Image.network(
+                                          imageUrl +
+                                              movie[index]['backdrop_path'],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )),
                                 ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          )
-                        ],
-                      );
-                    })),
+                                const SizedBox(
+                                  width: 20,
+                                )
+                              ],
+                            );
+                          }));
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -254,35 +300,47 @@ class _SeriesPageState extends State<SeriesPage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
+            FutureBuilder(
+              future: fetchActionMovies,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List movie = snapshot.data! as List;
+                  return Container(
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: movie.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                SizedBox(
+                                    height: 180,
+                                    width: 150,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        imageUrl +
+                                            movie[index]['backdrop_path'],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                const SizedBox(
+                                  width: 20,
+                                )
+                              ],
+                            );
+                          }));
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-                //margin: EdgeInsets.symmetric(vertical: 20.0),
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: actionMovieData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                        children: [
-                          SizedBox(
-                              height: 180,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  imageUrl +
-                                      actionMovieData[index]['backdrop_path'],
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          )
-                        ],
-                      );
-                    })),
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -299,34 +357,47 @@ class _SeriesPageState extends State<SeriesPage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: comedyMovieData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      print(comedyMovieData[index]['title']);
-                      return Row(
-                        children: [
-                          SizedBox(
-                              height: 180,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  imageUrl +
-                                      comedyMovieData[index]['backdrop_path'],
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          )
-                        ],
-                      );
-                    })),
+            FutureBuilder(
+              future: fetchComedyMovies,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List movie = snapshot.data! as List;
+                  return Container(
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: movie.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                SizedBox(
+                                    height: 180,
+                                    width: 150,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        imageUrl +
+                                            movie[index]['backdrop_path'],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                const SizedBox(
+                                  width: 20,
+                                )
+                              ],
+                            );
+                          }));
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -343,34 +414,47 @@ class _SeriesPageState extends State<SeriesPage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: crimeMovieData.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      print(comedyMovieData[index]['title']);
-                      return Row(
-                        children: [
-                          SizedBox(
-                              height: 180,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  imageUrl +
-                                      crimeMovieData[index]['backdrop_path'],
-                                  fit: BoxFit.cover,
-                                ),
-                              )),
-                          const SizedBox(
-                            width: 20,
-                          )
-                        ],
-                      );
-                    })),
+            FutureBuilder(
+              future: fetchCrimeMovies,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List movie = snapshot.data! as List;
+                  return Container(
+                      //margin: EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200,
+                      width: double.infinity,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: movie.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              children: [
+                                SizedBox(
+                                    height: 180,
+                                    width: 150,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        imageUrl +
+                                            movie[index]['backdrop_path'],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )),
+                                const SizedBox(
+                                  width: 20,
+                                )
+                              ],
+                            );
+                          }));
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
+
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
             const SizedBox(
               height: 20,
             ),
