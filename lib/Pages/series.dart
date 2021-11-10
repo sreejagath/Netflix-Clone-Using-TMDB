@@ -40,24 +40,24 @@ class _SeriesPageState extends State<SeriesPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      fetchMovie();
-    });
-    setState(() {
-      movieData = movieData;
-    });
+    // setState(() {
+    //   fetchMovie();
+    // });
+    // setState(() {
+    //   movieData = movieData;
+    // });
     fetchCrimeMovies = fetchCrimeMovie();
     fetchComedyMovies = fetchComedyMovie();
     fetchTrendingMovies = fetchTrendingMovie();
     fetchActionMovies = fetchActionMovie();
   }
 
-  fetchMovie() async {
-    movieData = await fetchTrendingMovie();
-    actionMovieData = await fetchActionMovie();
-    comedyMovieData = await fetchComedyMovie();
-    //crimeMovieData = await fetchCrimeMovie();
-  }
+  // fetchMovie() async {
+  //   movieData = await fetchTrendingMovie();
+  //   actionMovieData = await fetchActionMovie();
+  //   comedyMovieData = await fetchComedyMovie();
+  //   //crimeMovieData = await fetchCrimeMovie();
+  // }
 
   @override
   Widget build(BuildContext context) {
