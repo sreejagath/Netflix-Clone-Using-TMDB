@@ -22,6 +22,10 @@ class _QuickLaughsState extends State<QuickLaughs> {
     });
     super.initState();
   }
+  void dispose() {
+    _controller!.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:netflix_clone/Pages/downloads.dart';
 import 'package:netflix_clone/Pages/home.dart';
 import 'package:netflix_clone/Pages/moviespage.dart';
 import 'package:netflix_clone/Pages/quick_laugh.dart';
+import 'package:netflix_clone/Pages/search.dart';
 import 'package:netflix_clone/Pages/series.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 
@@ -46,7 +47,12 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               icon: const Icon(Icons.search),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
             ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.person))
           ],

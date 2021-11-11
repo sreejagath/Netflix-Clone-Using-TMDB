@@ -138,3 +138,14 @@ Future getMoviesCategoryWise(int id)async{
     throw Exception('Failed to load album');
   }
 }
+
+Future searchMovies(String query) async{
+  final response = await http.get(Uri.parse(
+      defaultUrl + 'search/movie?api_key=' + api + '&query=' + query));
+  if (response.statusCode == 200) {
+    var jsonData = json.decode(response.body);
+    return jsonData['results'];
+  } else {
+    throw Exception('Failed to load album');
+  }
+}

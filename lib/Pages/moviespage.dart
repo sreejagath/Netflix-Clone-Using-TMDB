@@ -61,7 +61,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                       image: NetworkImage(
                                         imageUrl +
                                             movie[randomNumber]
-                                                ['backdrop_path'],
+                                                ['poster_path'],
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -211,7 +211,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
                                           imageUrl +
-                                              movie[index]['backdrop_path'],
+                                              movie[index]['poster_path'],
                                           fit: BoxFit.cover,
                                         ),
                                       )),
@@ -277,7 +277,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
                                           imageUrl +
-                                              movie[index]['backdrop_path'],
+                                              movie[index]['poster_path'],
                                           fit: BoxFit.cover,
                                         ),
                                       )),
@@ -343,7 +343,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
                                           imageUrl +
-                                              movie[index]['backdrop_path'],
+                                              movie[index]['poster_path'],
                                           fit: BoxFit.cover,
                                         ),
                                       )),
@@ -409,7 +409,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                             BorderRadius.circular(10.0),
                                         child: Image.network(
                                           imageUrl +
-                                              movie[index]['backdrop_path'],
+                                              movie[index]['poster_path'],
                                           fit: BoxFit.cover,
                                         ),
                                       )),
