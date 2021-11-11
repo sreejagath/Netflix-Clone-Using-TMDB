@@ -144,7 +144,9 @@ Future searchMovies(String query) async{
       defaultUrl + 'search/movie?api_key=' + api + '&query=' + query));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
+    print(jsonData['results']);
     return jsonData['results'];
+
   } else {
     throw Exception('Failed to load album');
   }

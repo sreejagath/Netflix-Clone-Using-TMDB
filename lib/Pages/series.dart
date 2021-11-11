@@ -94,8 +94,7 @@ class _SeriesPageState extends State<SeriesPage> {
                                     image: DecorationImage(
                                       image: NetworkImage(
                                         imageUrl +
-                                            movie[randomNumber]
-                                                ['poster_path'],
+                                            movie[randomNumber]['poster_path'],
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -197,10 +196,110 @@ class _SeriesPageState extends State<SeriesPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Icon(
-                                            Icons.info,
-                                            color: Colors.white,
-                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Container(
+                                                          height: 300,
+                                                          color: Colors.black,
+                                                          child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: Row(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Container(
+                                                                          width:
+                                                                              100,
+                                                                          height:
+                                                                              180,
+                                                                          child: Image.network(
+                                                                              imageUrl + movie[randomNumber]['poster_path'],
+                                                                              fit: BoxFit.cover)),
+                                                                      SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                      Column(
+                                                                        children: [
+                                                                          Container(
+                                                                            width:
+                                                                                200,
+                                                                            child:
+                                                                                Text(
+                                                                              movie[randomNumber]['title'] ?? '--No Title Availiable--',
+                                                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Container(
+                                                                            width:
+                                                                                200,
+                                                                            child:
+                                                                                Text(
+                                                                              movie[randomNumber]['release_date'].length > 4 ? movie[randomNumber]['release_date'].substring(0, 4) : '--No Release Date Availiable--',
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
+                                                                          Container(
+                                                                            width:
+                                                                                200,
+                                                                            child:
+                                                                                Text(
+                                                                              movie[randomNumber]['overview'].length > 100 ? movie[randomNumber]['overview'].substring(0, 100) + '...' : movie[randomNumber]['overview'],
+                                                                              //?? '--No Overview Availiable--',
+                                                                              style: TextStyle(fontSize: 15, color: Colors.white),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.all(8.0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Container(
+                                                                        width: 150,
+                                                                        
+                                                                        child: Center(
+                                                                          child: ElevatedButton(
+                                                                              onPressed:
+                                                                                  () {},
+                                                                              child: Row(
+                                                                                  children: [Icon(Icons.play_arrow,color:Colors.white),Text('Play')])),
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              ]));
+                                                    });
+                                              },
+                                              icon: Icon(Icons.info,
+                                                  color: Colors.white)),
                                           Text('Info')
                                         ],
                                       ),
@@ -257,8 +356,8 @@ class _SeriesPageState extends State<SeriesPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MovieDetail(
-                                            id: movie[index]['id']),
+                                        builder: (context) =>
+                                            MovieDetail(id: movie[index]['id']),
                                       ),
                                     );
                                   },
@@ -326,8 +425,8 @@ class _SeriesPageState extends State<SeriesPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MovieDetail(
-                                            id: movie[index]['id']),
+                                        builder: (context) =>
+                                            MovieDetail(id: movie[index]['id']),
                                       ),
                                     );
                                   },
@@ -395,8 +494,8 @@ class _SeriesPageState extends State<SeriesPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MovieDetail(
-                                            id: movie[index]['id']),
+                                        builder: (context) =>
+                                            MovieDetail(id: movie[index]['id']),
                                       ),
                                     );
                                   },
@@ -464,8 +563,8 @@ class _SeriesPageState extends State<SeriesPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => MovieDetail(
-                                            id: movie[index]['id']),
+                                        builder: (context) =>
+                                            MovieDetail(id: movie[index]['id']),
                                       ),
                                     );
                                   },

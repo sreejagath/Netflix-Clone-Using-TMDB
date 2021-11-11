@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 import 'package:netflix_clone/Data Fetch/default_datas.dart';
+import 'package:netflix_clone/Pages/movie_detail.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class _SearchPageState extends State<SearchPage> {
     //searchedMoviesList = searchMovies(query: searchQuery.text);
   }
 
+  String searchText = "";
   List searchedData = [];
 
   @override
@@ -44,7 +46,8 @@ class _SearchPageState extends State<SearchPage> {
             child: TextFormField(
                 controller: searchQuery,
                 onChanged: (value) {
-                  searchedMoviesList = searchMovies(value);
+                  searchText = value;
+                  searchedMoviesList = searchMovies(searchText);
                 },
                 decoration: InputDecoration(
                     filled: true,
@@ -62,93 +65,105 @@ class _SearchPageState extends State<SearchPage> {
                 cursorColor: Colors.white),
           )),
 
-          // searchQuery.text.isNotEmpty
-          //     ? FutureBuilder(
-          //         future: fetchTrendingMovies,
-          //         builder: (BuildContext context, snapshot) {
-          //           if (snapshot.hasData) {
-          //             List movie = snapshot.data! as List;
+          searchText.isEmpty
+              ? FutureBuilder(
+                  future: fetchTrendingMovies,
+                  builder: (BuildContext context, snapshot) {
+                    if (snapshot.hasData) {
+                      List movie = snapshot.data! as List;
 
-          //             return Container(
-          //               height: MediaQuery.of(context).size.height,
-          //               child: ListView.builder(
-          //                   itemCount: movie.length,
-          //                   itemBuilder: (BuildContext context, int index) {
-          //                     print(movie[index]['title']);
-          //                     return Container(
-          //                       width: MediaQuery.of(context).size.width,
-          //                       height: 100,
-          //                       child: Card(
-          //                         elevation: 5,
-          //                         color: Colors.grey[900],
-          //                         child: Row(
-          //                           children: [
-          //                             SizedBox(
-          //                               width: 10,
-          //                             ),
-          //                             Container(
-          //                               width: 100,
-          //                               height: 50,
-          //                               //color: Colors.black,
-          //                               child: Image.network(
-          //                                 imageUrl +
-          //                                     movie[index]['poster_path'],
-          //                                 fit: BoxFit.cover,
-          //                               ),
-          //                             ),
-          //                             SizedBox(
-          //                               width: 10,
-          //                             ),
-          //                             Container(
-          //                               width:
-          //                                   MediaQuery.of(context).size.width *
-          //                                       0.5,
-          //                               child: Column(
-          //                                 crossAxisAlignment:
-          //                                     CrossAxisAlignment.start,
-          //                                 mainAxisAlignment:
-          //                                     MainAxisAlignment.center,
-          //                                 children: [
-          //                                   Text(
-          //                                     movie[index]['title'] ??
-          //                                         'No Title',
-          //                                   ),
-          //                                 ],
-          //                               ),
-          //                             ),
-          //                             SizedBox(
-          //                               width: 10,
-          //                             ),
-          //                             Container(
-          //                               width:
-          //                                   MediaQuery.of(context).size.width *
-          //                                       0.1,
-          //                               child: Column(
-          //                                 crossAxisAlignment:
-          //                                     CrossAxisAlignment.start,
-          //                                 mainAxisAlignment:
-          //                                     MainAxisAlignment.center,
-          //                                 children: [
-          //                                   Icon(
-          //                                     Icons.play_circle_outline,
-          //                                     color: Colors.white,
-          //                                   )
-          //                                 ],
-          //                               ),
-          //                             ),
-          //                           ],
-          //                         ),
-          //                       ),
-          //                     );
-          //                   }),
-          //             );
-          //           } else if (snapshot.hasError) {
-          //             return Text("${snapshot.error}");
-          //           }
-          //           return CircularProgressIndicator();
-          //         },
-          //       )
-          //     : Container(),
+                      return Container(
+                        height: MediaQuery.of(context).size.height,
+                        child: ListView.builder(
+                            itemCount: movie.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              int movieId = movie[index]['id'];
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 100,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MovieDetail(
+                                                  id: movieId,
+                                                )));
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    color: Colors.grey[900],
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: 100,
+                                          height: 50,
+                                          //color: Colors.black,
+                                          child: Image.network(
+                                            imageUrl +
+                                                movie[index]['poster_path'],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.5,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                movie[index]['title'] ??
+                                                    '-- No Title Availiable --',
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.1,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.play_circle_outline,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                )
+              : Container(),
           //decoration: InputDecoration(hintText: 'Search'))),
         ])));
   }

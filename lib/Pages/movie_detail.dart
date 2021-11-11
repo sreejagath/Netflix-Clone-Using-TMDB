@@ -46,20 +46,20 @@ class _MovieDetailState extends State<MovieDetail> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
-                      decoration: BoxDecoration(
-                              //borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  //'https://assets.gadgets360cdn.com/pricee/assets/product/202104/The-Misfits-250x358_1619719871.jpg'
-                                  imageUrl + movieData![0]['backdrop_path'],
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                    decoration: BoxDecoration(
+                      //borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          //'https://assets.gadgets360cdn.com/pricee/assets/product/202104/The-Misfits-250x358_1619719871.jpg'
+                          imageUrl + movieData![0]['backdrop_path'],
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     // child: Container(
                     //   //margin: EdgeInsets.symmetric(vertical: 20.0),
                     //   height: 200,
-                      
+
                     // ),
                   ),
                   Container(
@@ -69,7 +69,7 @@ class _MovieDetailState extends State<MovieDetail> {
                         Container(
                           //margin: EdgeInsets.symmetric(vertical: 20.0),
                           child: Text(
-                            movieData![0]['title'],
+                            movieData![0]['title'] ?? '--No Title Availiable--',
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,

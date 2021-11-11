@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Pages/category_details.dart';
+import 'package:netflix_clone/Pages/series.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ List catogories = [
 ];
 
 List catogoriesWithIds = [
-  {'id': 'all', 'name': 'All'},
+  //{'id': 0, 'name': 'All'},
   {'id': 28, 'name': 'Action'},
   {'id': 35, 'name': 'Comedy'},
   {'id': 18, 'name': 'Drama'},
@@ -43,30 +44,35 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-    children: <Widget>[
-      ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: AlwaysScrollableScrollPhysics(),
-        itemCount: catogories.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              catogoriesWithIds[index]['name'],
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.grey,
-              ),
-            ),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return CategoryDetails(categoryId: catogoriesWithIds[index]['id'], categoryName: catogoriesWithIds[index]['name']);
-              }));
+        children: <Widget>[
+          ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: AlwaysScrollableScrollPhysics(),
+            itemCount: catogoriesWithIds.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  catogoriesWithIds[index]['name'],
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
+                  ),
+                ),
+                onTap: () {
+                  catogoriesWithIds[index]['id'] == 0
+                      ? SeriesPage()
+                      : Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                          return CategoryDetails(
+                              categoryId: catogoriesWithIds[index]['id'],
+                              categoryName: catogoriesWithIds[index]['name']);
+                        }));
+                },
+              );
             },
-          );
-        },
-      ),
-    ],
+          ),
+        ],
       ),
     );
   }
