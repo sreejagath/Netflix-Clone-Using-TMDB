@@ -14,30 +14,31 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   List? movieData = [];
-  List? movieTrailer = [];
+  String? movieTrailer;
   YoutubePlayerController? _controller;
   Future? getMovieDetails;
   Future? getMovieTrailer;
-  int? youtubeKey;
+  String? youtubeKey;
+
+  Future<String> getVideoId() async {
+    getMovieTrailer = fetchYoutubeTrailer(widget.id);
+    youtubeKey = await getMovieTrailer;
+    return youtubeKey!;
+  }
+
   @override
   void initState() {
     super.initState();
-    getMovieDetails = fetchYoutubeTrailer(widget.id);
-    getMovieDetails!.then((value) => setState(() {
-          movieTrailer = value;
-          youtubeKey = movieTrailer![0]['key'];
-          _controller = YoutubePlayerController(
-            initialVideoId: youtubeKey as String,
-            // flags: YoutubePlayerFlags(
-            //   //autoPlay: true,
-            //   mute: false,
-            // ),
-          );
-        }));
+    
+    getMovieTrailer = fetchYoutubeTrailer(widget.id);
     getMovieDetails = getTheMovie(widget.id);
-    // _controller = YoutubePlayerController(
-    //   initialVideoId: ,
-    // );
+    
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller?.dispose();
   }
 
   @override
@@ -54,6 +55,7 @@ class _MovieDetailState extends State<MovieDetail> {
       ),
       body: SingleChildScrollView(
           child: Column(children: [
+        
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
@@ -81,10 +83,34 @@ class _MovieDetailState extends State<MovieDetail> {
                     //   height: 200,
 
                     // ),
-                    child: YoutubePlayer(
-                      controller: _controller!,
-                      
-                    )
+                    child: FutureBuilder(
+          future: getMovieTrailer,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              _controller = YoutubePlayerController(
+      initialVideoId: snapshot.data! as String,
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+      
+    );
+              return YoutubePlayer(
+                controller: _controller!,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.amber,
+                progressColors: ProgressBarColors(
+                  playedColor: Colors.amber,
+                  handleColor: Colors.amberAccent,
+                ),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
                   ),
                   Container(
                       child: Column(

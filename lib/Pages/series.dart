@@ -109,7 +109,6 @@ class _SeriesPageState extends State<SeriesPage> {
                             ),
                           ),
                           Container(
-                            //title and play button
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.3,
                             decoration: BoxDecoration(
