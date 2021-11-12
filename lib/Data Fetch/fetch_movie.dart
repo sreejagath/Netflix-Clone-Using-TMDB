@@ -78,6 +78,7 @@ Future fetchTrendingMovie() async {
       defaultUrl + 'trending/all/week?api_key=' + api + '&language=en-US'));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
+    print(jsonData['results'][0]['key']);
     return jsonData['results'];
   } else {
     throw Exception('Failed to load album');
@@ -118,8 +119,12 @@ Future fetchCrimeMovie() async {
 }
 
 Future getTheMovie(int id) async {
-  final response = await http.get(Uri.parse(
-      defaultUrl + 'movie/' + id.toString()+ '?api_key=' + api + '&language=en-US'));
+  final response = await http.get(Uri.parse(defaultUrl +
+      'movie/' +
+      id.toString() +
+      '?api_key=' +
+      api +
+      '&language=en-US'));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     return jsonData;
@@ -128,9 +133,12 @@ Future getTheMovie(int id) async {
   }
 }
 
-Future getMoviesCategoryWise(int id)async{
-  final response = await http.get(Uri.parse(
-      defaultUrl + 'discover/movie?api_key=' + api + '&with_genres=' + id.toString()));
+Future getMoviesCategoryWise(int id) async {
+  final response = await http.get(Uri.parse(defaultUrl +
+      'discover/movie?api_key=' +
+      api +
+      '&with_genres=' +
+      id.toString()));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     return jsonData['results'];
@@ -139,15 +147,18 @@ Future getMoviesCategoryWise(int id)async{
   }
 }
 
-Future searchMovies(String query) async{
+Future searchMovies(String query) async {
   final response = await http.get(Uri.parse(
       defaultUrl + 'search/movie?api_key=' + api + '&query=' + query));
   if (response.statusCode == 200) {
     var jsonData = json.decode(response.body);
     print(jsonData['results']);
     return jsonData['results'];
-
   } else {
     throw Exception('Failed to load album');
   }
+}
+
+Future fetchYoutubeTrailer() async{
+  
 }
