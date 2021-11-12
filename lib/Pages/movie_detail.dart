@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/Data Fetch/fetch_movie.dart';
 import 'package:netflix_clone/Data Fetch/default_datas.dart';
 import 'package:readmore/readmore.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetail extends StatefulWidget {
   final int id;
@@ -13,11 +14,30 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   List? movieData = [];
+  List? movieTrailer = [];
+  YoutubePlayerController? _controller;
   Future? getMovieDetails;
+  Future? getMovieTrailer;
+  int? youtubeKey;
   @override
   void initState() {
     super.initState();
+    getMovieDetails = fetchYoutubeTrailer(widget.id);
+    getMovieDetails!.then((value) => setState(() {
+          movieTrailer = value;
+          youtubeKey = movieTrailer![0]['key'];
+          _controller = YoutubePlayerController(
+            initialVideoId: youtubeKey as String,
+            // flags: YoutubePlayerFlags(
+            //   //autoPlay: true,
+            //   mute: false,
+            // ),
+          );
+        }));
     getMovieDetails = getTheMovie(widget.id);
+    // _controller = YoutubePlayerController(
+    //   initialVideoId: ,
+    // );
   }
 
   @override
@@ -46,21 +66,25 @@ class _MovieDetailState extends State<MovieDetail> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                      //borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          //'https://assets.gadgets360cdn.com/pricee/assets/product/202104/The-Misfits-250x358_1619719871.jpg'
-                          imageUrl + movieData![0]['backdrop_path'],
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    // decoration: BoxDecoration(
+                    //   //borderRadius: BorderRadius.circular(10),
+                    //   image: DecorationImage(
+                    //     image: NetworkImage(
+                    //       //'https://assets.gadgets360cdn.com/pricee/assets/product/202104/The-Misfits-250x358_1619719871.jpg'
+                    //       imageUrl + movieData![0]['backdrop_path'],
+                    //     ),
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
                     // child: Container(
                     //   //margin: EdgeInsets.symmetric(vertical: 20.0),
                     //   height: 200,
 
                     // ),
+                    child: YoutubePlayer(
+                      controller: _controller!,
+                      
+                    )
                   ),
                   Container(
                       child: Column(

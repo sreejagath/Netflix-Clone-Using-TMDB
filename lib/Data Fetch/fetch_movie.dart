@@ -159,6 +159,17 @@ Future searchMovies(String query) async {
   }
 }
 
-Future fetchYoutubeTrailer() async{
-  
+Future fetchYoutubeTrailer(int id) async {
+  final response = await http.get(Uri.parse(defaultUrl +
+      id.toString() +
+      '/videos?api_key=' +
+      api +
+      '&language=en-US'));
+  if (response.statusCode == 200) {
+    var jsonData = json.decode(response.body);
+    print(jsonData['results']['key']);
+    return jsonData['results']['key'];
+  } else {
+    throw Exception('Failed to load album');
+  }
 }
