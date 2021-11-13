@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/Pages/category_details.dart';
+import 'package:netflix_clone/Pages/home.dart';
+import 'package:netflix_clone/Pages/homepage.dart';
 import 'package:netflix_clone/Pages/series.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -25,7 +27,7 @@ List catogories = [
 ];
 
 List catogoriesWithIds = [
-  //{'id': 0, 'name': 'All'},
+  {'id': 0, 'name': 'All'},
   {'id': 28, 'name': 'Action'},
   {'id': 35, 'name': 'Comedy'},
   {'id': 18, 'name': 'Drama'},
@@ -61,7 +63,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
                 onTap: () {
                   catogoriesWithIds[index]['id'] == 0
-                      ? SeriesPage()
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage(
+                            
+                          )),
+                        )
                       : Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                           return CategoryDetails(

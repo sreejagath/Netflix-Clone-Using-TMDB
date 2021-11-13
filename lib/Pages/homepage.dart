@@ -4,6 +4,7 @@ import 'package:netflix_clone/Pages/coming_soon.dart';
 import 'package:netflix_clone/Pages/downloads.dart';
 import 'package:netflix_clone/Pages/home.dart';
 import 'package:netflix_clone/Pages/moviespage.dart';
+import 'package:netflix_clone/Pages/profile.dart';
 import 'package:netflix_clone/Pages/quick_laugh.dart';
 import 'package:netflix_clone/Pages/search.dart';
 import 'package:netflix_clone/Pages/series.dart';
@@ -54,7 +55,14 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.person))
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
+                icon: const Icon(Icons.person))
           ],
         ),
         // body: const TabBarView(

@@ -93,16 +93,15 @@ class _MovieDetailState extends State<MovieDetail> {
         autoPlay: false,
         mute: false,
       ),
-      
     );
               return YoutubePlayer(
                 controller: _controller!,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.amber,
-                progressColors: ProgressBarColors(
-                  playedColor: Colors.amber,
-                  handleColor: Colors.amberAccent,
-                ),
+                // showVideoProgressIndicator: true,
+                // progressIndicatorColor: Colors.amber,
+                // progressColors: ProgressBarColors(
+                //   playedColor: Colors.amber,
+                //   handleColor: Colors.amberAccent,
+                // ),
               );
             } else {
               return Center(
