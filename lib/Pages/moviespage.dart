@@ -60,8 +60,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                     image: DecorationImage(
                                       image: NetworkImage(
                                         imageUrl +
-                                            movie[randomNumber]
-                                                ['poster_path'],
+                                            movie[randomNumber]['poster_path'],
                                       ),
                                       fit: BoxFit.cover,
                                     ),
@@ -140,11 +139,208 @@ class _MoviesPageState extends State<MoviesPage> {
                                         width: 20,
                                       ),
                                       Column(
-                                        children: const [
-                                          Icon(
-                                            Icons.info,
-                                            color: Colors.white,
-                                          ),
+                                        children: [
+                                          IconButton(
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Stack(children: [
+                                                        Container(
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[900],
+                                                                borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            15),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            15))),
+                                                            height: 350,
+                                                            //color: Colors.black,
+                                                            child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Container(
+                                                                            width:
+                                                                                100,
+                                                                            height:
+                                                                                150,
+                                                                            child:
+                                                                                Image.network(imageUrl + movie[randomNumber]['poster_path'], fit: BoxFit.cover)),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              10,
+                                                                        ),
+                                                                        Column(
+                                                                          children: [
+                                                                            Container(
+                                                                              width: 200,
+                                                                              child: Text(
+                                                                                movie[randomNumber]['title'] ?? '--No Title Availiable--',
+                                                                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Container(
+                                                                              width: 200,
+                                                                              child: Text(
+                                                                                movie[randomNumber]['release_date'].length > 4 ? movie[randomNumber]['release_date'].substring(0, 4) : '--No Release Date Availiable--',
+                                                                              ),
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 10,
+                                                                            ),
+                                                                            Container(
+                                                                              width: 200,
+                                                                              child: Text(
+                                                                                movie[randomNumber]['overview'].length > 100 ? movie[randomNumber]['overview'].substring(0, 100) + '...' : movie[randomNumber]['overview'],
+                                                                                //?? '--No Overview Availiable--',
+                                                                                style: TextStyle(fontSize: 15, color: Colors.white),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              200,
+                                                                          child:
+                                                                              ElevatedButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                                                return MovieDetail(
+                                                                                  id: movie[randomNumber]['id'],
+                                                                                );
+                                                                              }));
+                                                                            },
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Icon(
+                                                                                  Icons.play_arrow,
+                                                                                  color: Colors.black,
+                                                                                ),
+                                                                                Text(
+                                                                                  'Play',
+                                                                                  style: TextStyle(
+                                                                                    color: Colors.black,
+                                                                                    //fontSize: 20,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            style:
+                                                                                ElevatedButton.styleFrom(
+                                                                              primary: Colors.white,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              15,
+                                                                        ),
+                                                                        Container(
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Icon(
+                                                                                Icons.download,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                              Text('Download')
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              25,
+                                                                        ),
+                                                                        Container(
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Icon(
+                                                                                Icons.play_arrow_outlined,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                              Text('Preview')
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Divider(),
+                                                                  ListTile(
+                                                                      title: Text(
+                                                                          'Episodes & Info',
+                                                                          style: TextStyle(
+                                                                              color: Colors
+                                                                                  .white)),
+                                                                      leading: Icon(
+                                                                          Icons
+                                                                              .info,
+                                                                          color: Colors
+                                                                              .white),
+                                                                      trailing: Icon(
+                                                                          Icons
+                                                                              .arrow_forward_ios,
+                                                                          color:
+                                                                              Colors.white))
+                                                                ])),
+                                                        Positioned(
+                                                          top: 0,
+                                                          right: 0,
+                                                          child: IconButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              icon: Icon(
+                                                                  Icons
+                                                                      .close_rounded,
+                                                                  color: Colors
+                                                                      .white)),
+                                                        )
+                                                      ]);
+                                                    });
+                                              },
+                                              icon: Icon(
+                                                Icons.info,
+                                                color: Colors.white,
+                                              )),
                                           Text('Info')
                                         ],
                                       ),

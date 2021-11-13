@@ -155,13 +155,18 @@ class _SeriesPageState extends State<SeriesPage> {
                                       // ),
                                       Column(
                                         children: [
-                                          IconButton(onPressed: (){
-                                            setState(() {
-                                              isAdded = !isAdded;
-                                            
-                                            });
-                                            // isAdded = !isAdded;
-                                          }, icon: isAdded ? Icon(myListAdded, color: Colors.white) : Icon(myList, color: Colors.white)),
+                                          IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isAdded = !isAdded;
+                                                });
+                                                // isAdded = !isAdded;
+                                              },
+                                              icon: isAdded
+                                                  ? Icon(myListAdded,
+                                                      color: Colors.white)
+                                                  : Icon(myList,
+                                                      color: Colors.white)),
                                           Text('My List')
                                         ],
                                       ),
@@ -206,6 +211,8 @@ class _SeriesPageState extends State<SeriesPage> {
                                           IconButton(
                                               onPressed: () {
                                                 showModalBottomSheet(
+                                                    backgroundColor:
+                                                        Colors.transparent,
                                                     context: context,
                                                     builder:
                                                         (BuildContext context) {
@@ -253,7 +260,12 @@ class _SeriesPageState extends State<SeriesPage> {
                                                                             Container(
                                                                               width: 200,
                                                                               child: Text(
-                                                                                movie[randomNumber]['title'] ?? '--No Title Availiable--',
+                                                                                movie[randomNumber]['title']!=null?
+                                                                                movie[randomNumber]['title'].length >
+                                                                                        20
+                                                                                    ? movie[randomNumber]['title'].substring(0, 20) + '...'
+                                                                                    : movie[randomNumber]['title']
+                                                                                : "--No Title Available--",
                                                                                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                                                                               ),
                                                                             ),
